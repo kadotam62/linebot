@@ -13,8 +13,8 @@ import os
  
 app = Flask(__name__)
  
-# ŠÂ‹«•Ï”æ“¾
-# LINE Developers‚Åİ’è‚³‚ê‚Ä‚¢‚éƒAƒNƒZƒXƒg[ƒNƒ“‚ÆChannel Secret‚ğ‚ğæ“¾‚µAİ’è‚µ‚Ü‚·B
+# ç’°å¢ƒå¤‰æ•°å–å¾—
+# LINE Developersã§è¨­å®šã•ã‚Œã¦ã„ã‚‹ã‚¢ã‚¯ã‚»ã‚¹ãƒˆãƒ¼ã‚¯ãƒ³ã¨Channel Secretã‚’ã‚’å–å¾—ã—ã€è¨­å®šã—ã¾ã™ã€‚
 YOUR_CHANNEL_ACCESS_TOKEN = os.environ["FRCegkJfi+6B+YfYGRkwx4nK/otrtBt2ihU/vScKjzzVY7gPdDzKYZEvwTh+F/eXEUXw5P/4ZZ+twM8d6Ech2CeAqtLcloGkISjdNgMkOnilKfq2yMw/upytHfa2oWp72VP3wMcelTRxZrTfN2D6YQdB04t89/1O/w1cDnyilFU="]
 YOUR_CHANNEL_SECRET = os.environ["a92c17fc24367bd759a06c6568a20d03"]
 
@@ -23,43 +23,43 @@ handler = WebhookHandler(YOUR_CHANNEL_SECRET)
 
 
 ## 1 ##
-# Webhook‚©‚ç‚ÌƒŠƒNƒGƒXƒg‚ğƒ`ƒFƒbƒN‚µ‚Ü‚·B
+# Webhookã‹ã‚‰ã®ãƒªã‚¯ã‚¨ã‚¹ãƒˆã‚’ãƒã‚§ãƒƒã‚¯ã—ã¾ã™ã€‚
 @app.route("/callback", methods=['POST'])
 def callback():
-    # ƒŠƒNƒGƒXƒgƒwƒbƒ_[‚©‚ç–¼ŒŸØ‚Ì‚½‚ß‚Ì’l‚ğæ“¾‚µ‚Ü‚·B
+    # ãƒªã‚¯ã‚¨ã‚¹ãƒˆãƒ˜ãƒƒãƒ€ãƒ¼ã‹ã‚‰ç½²åæ¤œè¨¼ã®ãŸã‚ã®å€¤ã‚’å–å¾—ã—ã¾ã™ã€‚
     signature = request.headers['X-Line-Signature']
 
-    # ƒŠƒNƒGƒXƒgƒ{ƒfƒB‚ğæ“¾‚µ‚Ü‚·B
+    # ãƒªã‚¯ã‚¨ã‚¹ãƒˆãƒœãƒ‡ã‚£ã‚’å–å¾—ã—ã¾ã™ã€‚
     body = request.get_data(as_text=True)
     app.logger.info("Request body: " + body)
 
     # handle webhook body
-    # –¼‚ğŒŸØ‚µA–â‘è‚È‚¯‚ê‚Îhandle‚É’è‹`‚³‚ê‚Ä‚¢‚éŠÖ”‚ğŒÄ‚Ño‚·B
+    # ç½²åã‚’æ¤œè¨¼ã—ã€å•é¡Œãªã‘ã‚Œã°handleã«å®šç¾©ã•ã‚Œã¦ã„ã‚‹é–¢æ•°ã‚’å‘¼ã³å‡ºã™ã€‚
     try:
         handler.handle(body, signature)
-    # –¼ŒŸØ‚Å¸”s‚µ‚½ê‡A—áŠO‚ğo‚·B
+    # ç½²åæ¤œè¨¼ã§å¤±æ•—ã—ãŸå ´åˆã€ä¾‹å¤–ã‚’å‡ºã™ã€‚
     except InvalidSignatureError:
         abort(400)
-    # handle‚Ìˆ—‚ğI‚¦‚ê‚ÎOK
+    # handleã®å‡¦ç†ã‚’çµ‚ãˆã‚Œã°OK
     return 'OK'
  
 ## 2 ##
 ###############################################
-# LINE‚ÌƒƒbƒZ[ƒW‚Ìæ“¾‚Æ•ÔM“à—e‚Ìİ’è(ƒIƒEƒ€•Ô‚µ)
+# LINEã®ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®å–å¾—ã¨è¿”ä¿¡å†…å®¹ã®è¨­å®š(ã‚ªã‚¦ãƒ è¿”ã—)
 ###############################################
 
-# LINE‚ÅMessageEventi•’Ê‚ÌƒƒbƒZ[ƒW‚ğ‘—M‚³‚ê‚½ê‡j‚ª‹N‚±‚Á‚½ê‡‚ÉA
-# defˆÈ‰º‚ÌŠÖ”‚ğÀs‚µ‚Ü‚·B
-# reply_message‚Ì‘æˆêˆø”‚Ìevent.reply_token‚ÍAƒCƒxƒ“ƒg‚Ì‰“š‚É—p‚¢‚éƒg[ƒNƒ“‚Å‚·B 
-# ‘æ“ñˆø”‚É‚ÍAlinebot.models‚É’è‹`‚³‚ê‚Ä‚¢‚é•ÔM—p‚ÌTextSendMessageƒIƒuƒWƒFƒNƒg‚ğ“n‚µ‚Ä‚¢‚Ü‚·B
+# LINEã§MessageEventï¼ˆæ™®é€šã®ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’é€ä¿¡ã•ã‚ŒãŸå ´åˆï¼‰ãŒèµ·ã“ã£ãŸå ´åˆã«ã€
+# defä»¥ä¸‹ã®é–¢æ•°ã‚’å®Ÿè¡Œã—ã¾ã™ã€‚
+# reply_messageã®ç¬¬ä¸€å¼•æ•°ã®event.reply_tokenã¯ã€ã‚¤ãƒ™ãƒ³ãƒˆã®å¿œç­”ã«ç”¨ã„ã‚‹ãƒˆãƒ¼ã‚¯ãƒ³ã§ã™ã€‚ 
+# ç¬¬äºŒå¼•æ•°ã«ã¯ã€linebot.modelsã«å®šç¾©ã•ã‚Œã¦ã„ã‚‹è¿”ä¿¡ç”¨ã®TextSendMessageã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’æ¸¡ã—ã¦ã„ã¾ã™ã€‚
  
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text=event.message.text)) #‚±‚±‚ÅƒIƒEƒ€•Ô‚µ‚ÌƒƒbƒZ[ƒW‚ğ•Ô‚µ‚Ü‚·B
+        TextSendMessage(text=event.message.text)) #ã“ã“ã§ã‚ªã‚¦ãƒ è¿”ã—ã®ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’è¿”ã—ã¾ã™ã€‚
 
-# ƒ|[ƒg”Ô†‚Ìİ’è
+# ãƒãƒ¼ãƒˆç•ªå·ã®è¨­å®š
 if __name__ == "__main__":
 #    app.run()
     port = int(os.getenv("PORT", 5000))
