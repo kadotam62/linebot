@@ -15,8 +15,8 @@ app = Flask(__name__)
  
 # 環境変数取得
 # LINE Developersで設定されているアクセストークンとChannel Secretをを取得し、設定します。
-YOUR_CHANNEL_ACCESS_TOKEN = os.environ["1653924191"]
-YOUR_CHANNEL_SECRET = os.environ["a92c17fc24367bd759a06c6568a20d03"]
+# YOUR_CHANNEL_ACCESS_TOKEN = os.environ["FRCegkJfi+6B+YfYGRkwx4nK/otrtBt2ihU/vScKjzzVY7gPdDzKYZEvwTh+F/eXEUXw5P/4ZZ+twM8d6Ech2CeAqtLcloGkISjdNgMkOnilKfq2yMw/upytHfa2oWp72VP3wMcelTRxZrTfN2D6YQdB04t89/1O/w1cDnyilFU="]
+# YOUR_CHANNEL_SECRET = os.environ["a92c17fc24367bd759a06c6568a20d03"]
 
 line_bot_api = LineBotApi(YOUR_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(YOUR_CHANNEL_SECRET)
